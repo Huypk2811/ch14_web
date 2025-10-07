@@ -50,14 +50,28 @@ public class EmailListServlet extends HttpServlet {
             boolean isBodyHTML = false;
 
             try {
-                // Enable email sending with proper error handling
-                System.out.println("DEBUG: Attempting to send email to: " + to);
-                System.out.println("DEBUG: Subject: " + subject);
-                System.out.println("DEBUG: From: " + from);
+                // Check if running on Render (production) vs local
+                String renderEnv = System.getenv("RENDER");
                 
-                // Send email with timeout
-                MailUtilGmail.sendMail(to, from, subject, body, isBodyHTML);
-                System.out.println("DEBUG: Email sent successfully!");
+                if (renderEnv != null) {
+                    // DEMO MODE: Render blocks SMTP, so simulate email sending
+                    System.out.println("=== DEMO MODE: EMAIL CONTENT ===");
+                    System.out.println("TO: " + to);
+                    System.out.println("FROM: " + from);
+                    System.out.println("SUBJECT: " + subject);
+                    System.out.println("BODY: " + body);
+                    System.out.println("=== EMAIL SIMULATED SUCCESSFULLY ===");
+                    
+                    // Store email content to show on thanks page
+                    request.setAttribute("emailSent", "DEMO");
+                    request.setAttribute("emailContent", body);
+                } else {
+                    // LOCAL MODE: Actually send email
+                    System.out.println("DEBUG: Attempting to send email to: " + to);
+                    MailUtilGmail.sendMail(to, from, subject, body, isBodyHTML);
+                    System.out.println("DEBUG: Email sent successfully!");
+                    request.setAttribute("emailSent", "SUCCESS");
+                }
                 
             } catch (Exception e) {
                 // Log error but don't crash the app
@@ -73,7 +87,8 @@ public class EmailListServlet extends HttpServlet {
                 System.out.println("ERROR: " + e.getMessage());
                 System.out.println("===========================");
                 
-                // Continue to show success page even if email fails
+                request.setAttribute("emailSent", "FAILED");
+                request.setAttribute("errorMessage", e.getMessage());
             }
             
             url = "/thanks.jsp";
