@@ -53,11 +53,25 @@ or similar URL assigned by Render
 
 ## 📋 **BUILD PROCESS ON RENDER:**
 ```bash
-# Render sẽ tự động chạy:
+# Render sẽ tự động chạy (Multi-stage Docker build):
 1. git clone https://github.com/Huypk2811/ch14_web.git
-2. mvn clean package  (tự động detect Maven)
-3. docker build -t app .
-4. docker run -p 10000:8080 app
+2. docker build . (bao gồm Maven build trong container)
+   - Stage 1: Maven builds WAR file in container
+   - Stage 2: Copy WAR to Tomcat container
+3. docker run -p 10000:8080 app
+```
+
+## 🔧 **DOCKERFILE EXPLANATION:**
+```dockerfile
+# Stage 1: Build WAR file với Maven
+FROM maven:3.8.6-openjdk-11-slim AS builder
+WORKDIR /app
+COPY pom.xml src/ web/ ./
+RUN mvn clean package
+
+# Stage 2: Deploy WAR to Tomcat
+FROM tomcat:9.0-jdk11-openjdk
+COPY --from=builder /app/target/ch14_ex1_email.war /usr/local/tomcat/webapps/ROOT.war
 ```
 
 ## ⏱️ **DEPLOYMENT TIME:**
