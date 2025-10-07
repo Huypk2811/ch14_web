@@ -1,9 +1,3 @@
-# Build artifacts
-target/
-build/
-dist/
-*.war
-
 # IDE files
 .vscode/
 .idea/
@@ -17,11 +11,6 @@ nbbuild/
 nbdist/
 .nb-gradle/
 
-# Maven
-.mvn/
-mvnw
-mvnw.cmd
-
 # OS files
 .DS_Store
 Thumbs.db
@@ -33,10 +22,12 @@ Thumbs.db
 *.tmp
 *.temp
 
-# Credentials (security)
-*.credentials
-*.env
-.env
-
 # Local configuration
 config/local.properties
+
+# Git files
+.git/
+.gitignore
+
+# Documentation (không cần trong Docker)
+*.md
