@@ -18,8 +18,8 @@ FROM tomcat:9.0-jdk11-openjdk
 # Remove default Tomcat applications
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy WAR file from builder stage
-COPY --from=builder /app/target/ch14_ex1_email.war /usr/local/tomcat/webapps/ROOT.war
+# Copy WAR file - Tomcat will auto-extract it
+COPY --from=builder /app/target/ch14_ex1_email.war /usr/local/tomcat/webapps/
 
 # Expose port 8080
 EXPOSE 8080
