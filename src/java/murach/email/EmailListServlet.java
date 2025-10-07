@@ -50,16 +50,19 @@ public class EmailListServlet extends HttpServlet {
             boolean isBodyHTML = false;
 
             try {
-                // Using Gmail utility to send real email
+                // Enable email sending with proper error handling
+                System.out.println("DEBUG: Attempting to send email to: " + to);
+                System.out.println("DEBUG: Subject: " + subject);
+                System.out.println("DEBUG: From: " + from);
+                
+                // Send email with timeout
                 MailUtilGmail.sendMail(to, from, subject, body, isBodyHTML);
+                System.out.println("DEBUG: Email sent successfully!");
+                
             } catch (Exception e) {
-                String errorMessage = 
-                    "ERROR: Unable to send email. " + 
-                        "Check Tomcat logs for details.<br>" +
-                    "NOTE: You may need to configure your Gmail credentials " + 
-                        "as described in the setup guide.<br>" +
-                    "ERROR MESSAGE: " + e.getMessage();
-                request.setAttribute("errorMessage", errorMessage);
+                // Log error but don't crash the app
+                System.err.println("ERROR: Failed to send email - " + e.getMessage());
+                e.printStackTrace();
                 
                 // Log the email content to console for debugging
                 System.out.println("=== EMAIL SENDING FAILED ===");
@@ -69,6 +72,8 @@ public class EmailListServlet extends HttpServlet {
                 System.out.println("BODY: " + body);
                 System.out.println("ERROR: " + e.getMessage());
                 System.out.println("===========================");
+                
+                // Continue to show success page even if email fails
             }
             
             url = "/thanks.jsp";

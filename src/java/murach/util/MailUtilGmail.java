@@ -20,6 +20,11 @@ public class MailUtilGmail {
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.ssl.protocols", "TLSv1.2");
         
+        // Add timeout settings for Render deployment
+        props.put("mail.smtp.connectiontimeout", "10000"); // 10 seconds
+        props.put("mail.smtp.timeout", "10000"); // 10 seconds
+        props.put("mail.smtp.writetimeout", "10000"); // 10 seconds
+        
         // Create authenticator with your Gmail credentials
         Authenticator authenticator = new Authenticator() {
             @Override
