@@ -1,0 +1,42 @@
+# Build artifacts
+target/
+build/
+dist/
+*.war
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# NetBeans files
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Credentials (security)
+*.credentials
+*.env
+.env
+
+# Local configuration
+config/local.properties

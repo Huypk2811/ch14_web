@@ -1,0 +1,47 @@
+# Build artifacts
+target/
+build/
+dist/
+*.war
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# NetBeans files
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# Maven
+.mvn/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Local configuration
+config/local.properties
+
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.nar
+*.ear
+
+# virtual machine crash logs
+hs_err_pid*
